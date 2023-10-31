@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uniquehist"
-version = "0.0.0"
+version = "0.0.1"
 authors = [{name = "jakob.hollenstein", email = "author@email.com"}]
 license = {text = "BSD 3 Clause"}
 description = "Tool to keep (BASH) history synced across sessions and unique."
