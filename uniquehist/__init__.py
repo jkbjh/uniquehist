@@ -10,6 +10,7 @@ import itertools
 from io import open
 import codecs
 import argparse
+from pathlib import Path
 
 
 @contextlib.contextmanager
@@ -33,8 +34,11 @@ def save_replace(filename, *a, **kw):
 def do_the_magic(historyfile, append_filename, backup_file):
     backup = os.path.expanduser(backup_file)
     if not os.path.exists(historyfile):
-        print("historyfile: %s does not exist" % (historyfile,))
-        sys.exit(1)
+        print("historyfile: %s does not exist, creating." % (historyfile,))
+        Path(historyfile).touch()
+    if not os.path.exists(backup):
+        print("backup: %s does not exist, creating." % (backup,))
+        Path(backup).touch()
 
     # read the old history
     with open(historyfile, "r+", encoding="utf8", errors="ignore") as f:
