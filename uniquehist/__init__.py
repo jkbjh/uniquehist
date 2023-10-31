@@ -108,8 +108,8 @@ def main():
         help="Path to the history file",
         default="$HOME/.unique_bash_history",
     )
-    parser.add_argument("-A", "--append_file", metavar="append_file", nargs="?", help="Path to the append file")
-    parser.add_argument("-B", "--backup_file", metavar="backup_file", nargs="?", help="Path to the backup file")
+    parser.add_argument("-A", "--append_file", metavar="append_file", help="Path to the append file")
+    parser.add_argument("-B", "--backup_file", metavar="backup_file", help="Path to the backup file")
 
     parser.add_argument("--lock-file", dest="lock_file", help="Path to the lock file", default=None)
     parser.add_argument("--install", action="store_true", help="""Output the code for installing the prompt command.
@@ -118,17 +118,11 @@ def main():
 
     source <(uniquehist --install)
     """)
-    parser.add_argument(
-        "--install-if-required",
-        action="store_true",
-        help="Output the code for installing the prompt command, if it's not present in the prompt command.",
-    )
 
     args = parser.parse_args()
-
     if args.install:
         install(args.history_file)
-    else:
+    elif args.append_file:
         historyfile = args.history_file
         append_filename = args.append_file
         backup_file = args.backup_file or os.path.join(historyfile, "1.bkp")
@@ -137,7 +131,8 @@ def main():
 
         with interprocess_lock(lock_file):
             do_the_magic(historyfile=historyfile, append_filename=append_filename, backupfile=backupfile)
-
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
     main()
