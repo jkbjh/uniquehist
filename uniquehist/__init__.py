@@ -125,7 +125,7 @@ def main():
     elif args.append_file:
         historyfile = args.history_file
         append_filename = args.append_file
-        backup_file = args.backup_file or os.path.join(historyfile, "1.bkp")
+        backup_file = args.backup_file or (historyfile + "1.bkp")
         # probably bad to use the history file as backup because save_replace removes it....
         lock_file = args.lock_file or "%s.lock" % (historyfile,)
 
