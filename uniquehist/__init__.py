@@ -87,6 +87,7 @@ def install(history_file):
 
     sourceable = """
     export HISTCONTROL=ignoreboth  # ignore commands with leading whitespace.
+    export HISTSIZE={default_histsize}
     export UNIQUEHIST_FILE={history_file}
     export UNIQUEHIST_APPEND_FILE=$(mktemp --suffix="bash-$$.uniquehist")
     export UNIQUEHIST_COMMAND="history -a $UNIQUEHIST_APPEND_FILE; uniquehist -H $UNIQUEHIST_FILE -A $UNIQUEHIST_APPEND_FILE; history -c ; history -r $UNIQUEHIST_FILE"
@@ -97,7 +98,8 @@ def install(history_file):
         echo "installing uniquehist"
     fi
     """.format(
-        history_file=history_file
+        history_file=history_file,
+        default_histsize=default_histsize,
     )
     print(sourceable)
 
