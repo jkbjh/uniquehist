@@ -85,7 +85,7 @@ def install(history_file):
     export HISTCONTROL=ignoreboth  # ignore commands with leading whitespace.
     export UNIQUEHIST_FILE={history_file}
     export UNIQUEHIST_APPEND_FILE=$(mktemp --suffix="bash-$$.uniquehist")
-    export UNIQUEHIST_COMMAND="history -a $UNIQUEHIST_APPEND_FILE; uniquehist -h $UNIQUEHIST_FILE -a $UNIQUEHIST_APPEND_FILE; history -c ; history -r $UNIQUEHIST_FILE"
+    export UNIQUEHIST_COMMAND="history -a $UNIQUEHIST_APPEND_FILE; uniquehist -H $UNIQUEHIST_FILE -A $UNIQUEHIST_APPEND_FILE; history -c ; history -r $UNIQUEHIST_FILE"
     if echo $PROMPT_COMMAND |grep uniquehist 1>/dev/null 2>&1; then
         echo "uniquehist already installed"
     else
@@ -108,8 +108,8 @@ def main():
         help="Path to the history file",
         default="$HOME/.unique_bash_history",
     )
-    parser.add_argument("-a", "--append_file", metavar="append_file", nargs="?", help="Path to the append file")
-    parser.add_argument("-b", "--backup_file", metavar="backup_file", nargs="?", help="Path to the backup file")
+    parser.add_argument("-A", "--append_file", metavar="append_file", nargs="?", help="Path to the append file")
+    parser.add_argument("-B", "--backup_file", metavar="backup_file", nargs="?", help="Path to the backup file")
 
     parser.add_argument("--lock-file", dest="lock_file", help="Path to the lock file", default=None)
     parser.add_argument("--install", action="store_true", help="""Output the code for installing the prompt command.
