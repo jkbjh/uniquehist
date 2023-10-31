@@ -30,8 +30,8 @@ def save_replace(filename, *a, **kw):
         shutil.copy(file_like.name, filename)
 
 
-def do_the_magic(historyfile, append_filename, backupfile):
-    backup = os.path.expanduser(backupfile)
+def do_the_magic(historyfile, append_filename, backup_file):
+    backup = os.path.expanduser(backup_file)
     if not os.path.exists(historyfile):
         print("historyfile: %s does not exist" % (historyfile,))
         sys.exit(1)
@@ -68,7 +68,7 @@ def do_the_magic(historyfile, append_filename, backupfile):
         else:
             sys.stdout.write(
                 "ERROR: history file is smaller than backup; Try appending the backup file (%s) to the history file or uniquifying the backup file.\n"
-                % (backupfile,)
+                % (backup_file,)
             )
 
     with save_replace(historyfile, "w") as f_out:
@@ -130,7 +130,7 @@ def main():
         lock_file = args.lock_file or "%s.lock" % (historyfile,)
 
         with interprocess_lock(lock_file):
-            do_the_magic(historyfile=historyfile, append_filename=append_filename, backupfile=backupfile)
+            do_the_magic(historyfile=historyfile, append_filename=append_filename, backup_file=backup_file)
     else:
         parser.print_help()
 
