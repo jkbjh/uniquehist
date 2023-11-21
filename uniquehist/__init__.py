@@ -83,7 +83,7 @@ def do_the_magic(historyfile, append_filename, backup_file):
 def install(history_file):
     ENV = os.environ
     default_histsize = 200_000
-    histsize = max(ENV.get("HISTSIZE", default_histsize), default_histsize)
+    histsize = max(int(ENV.get("HISTSIZE", default_histsize)), default_histsize)
 
     sourceable = """
     export HISTCONTROL=ignoreboth  # ignore commands with leading whitespace.
